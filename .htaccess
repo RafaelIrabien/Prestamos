@@ -1,0 +1,9 @@
+#Habilitamos la escritura de reglas o configuraciones del servidor apache
+RewriteEngine On
+
+#Ocultamos los archivos para que no se vean desde el navegador
+Options All -Indexes
+
+#Todo lo que venga en la URL después del nombre de la carpeta del proyecto
+#va a ser una variable llamada views y va a permitir este tipo de caracteres:
+RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1
