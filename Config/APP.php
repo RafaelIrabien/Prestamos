@@ -2,7 +2,7 @@
     //URL donde está alojada toda la aplicación
     const SERVER_URL = "http://localhost/Prestamos/";
 
-    const COMPANY = "Sistemas Prestamos";
+    const COMPANY = "Sistema Prestamos";
 
     const MONEDA = "$";
 
