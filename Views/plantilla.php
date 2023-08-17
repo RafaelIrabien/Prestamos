@@ -9,6 +9,19 @@
 
 </head>
 <body>
+	<?php
+		$peticionAjax = false;
+		require_once "./Controllers/vistasController.php";
+		$IV = new vistasController();
+
+		//Llamamos a la función del controlador
+		$Vistas = $IV->obtener_vistas_controlador();
+
+		//Detectamos si se está usando el login o no
+		if ($Vistas=="login" || $Vistas=="404") {
+			require_once "./Views/contents/".$Vistas."-view.php";
+		} else {
+	?>
 	
 	<!-- Main container -->
 	<main class="full-box main-container">
@@ -18,12 +31,20 @@
 
 		<!-- Page content -->
 		<section class="full-box page-content">
-			<?php include "./Views/inc/NavBar.php"; ?>
+			<?php 
+				include "./Views/inc/NavBar.php"; 
+				
+				//Traer el contenido almacenado en $Vistas
+				include $Vistas;
+			?>
 			
 
 		</section>
 	</main>
 	
-    <?php include "./Views/inc/Script.php"; ?>
+    <?php 
+		}
+		include "./Views/inc/Script.php"; 
+	?>
 </body>
 </html>
