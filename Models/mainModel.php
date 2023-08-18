@@ -48,6 +48,13 @@ class mainModel {
         return $output;
     }
 
-    
+    /*-------- Función desencriptar cadenas --------*/
+    protected static function decryption($string) {
+        $key = hash('sha256', SECRET_KEY);
+        $iv = substr(hash('sha256', SECRET_IV), 0, 16);
+        //base64_decode($string): Esto decodifica la cadena de entrada codificada en base64 de nuevo en su forma cifrada binaria
+        $output = openssl_decrypt(base64_decode($string), METHOD, $key, 0, $iv);
+        return $output;
+    }
 
 }
