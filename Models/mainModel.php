@@ -17,5 +17,11 @@ class mainModel {
         return $conexion;
     }
 
-   
+    /*-------- Función ejecutar consultas simples --------*/
+    protected static function ejecutar_consulta_simple($consulta) {
+        $sql = self::conectar()->prepare($consulta);
+        $sql->execute();
+        return $sql;
+    }
+
 }
