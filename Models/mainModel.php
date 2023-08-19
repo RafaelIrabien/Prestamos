@@ -70,4 +70,43 @@ class mainModel {
         return $letra."-".$numero;
      }
 
+     /*-------- Función limpiar cadenas --------*/
+     //Evita inyecciones sql
+     protected static function limpiar_cadena($cadena) {
+        //Eliminamos espacios que estén antes o después del texto
+        $cadena = trim($cadena);
+        //Eliminar las barras invertidas
+        $cadena = stripcslashes($cadena);
+        //Nos permite definir una cadena que debe ser reemplazada 
+        //con otra dentro de una frase o palabra
+        $cadena = str_ireplace("<stript>", "", $cadena);
+        $cadena = str_ireplace("</stript>", "", $cadena);
+        $cadena = str_ireplace("<stript src", "", $cadena);
+        $cadena = str_ireplace("<stript type=", "", $cadena);
+        $cadena = str_ireplace("SELECT * FROM", "", $cadena);
+        $cadena = str_ireplace("DELETE FROM", "", $cadena);
+        $cadena = str_ireplace("INSERT INTO", "", $cadena);
+        $cadena = str_ireplace("DROP TABLE", "", $cadena);
+        $cadena = str_ireplace("DROP DATABASE", "", $cadena);
+        $cadena = str_ireplace("TRUNCATE TABLE", "", $cadena);
+        $cadena = str_ireplace("SHOW TABLES", "", $cadena);
+        $cadena = str_ireplace("SHOW DATABASES", "", $cadena);
+        $cadena = str_ireplace("<?php", "", $cadena);
+        $cadena = str_ireplace("?>", "", $cadena);
+        $cadena = str_ireplace("--", "", $cadena);
+        $cadena = str_ireplace("<", "", $cadena);
+        $cadena = str_ireplace(">", "", $cadena);
+        $cadena = str_ireplace("[", "", $cadena);
+        $cadena = str_ireplace("]", "", $cadena);
+        $cadena = str_ireplace("^", "", $cadena);
+        $cadena = str_ireplace("==", "", $cadena);
+        $cadena = str_ireplace(";", "", $cadena);
+        $cadena = str_ireplace("::", "", $cadena);
+        //Eliminar las barras invertidas
+        $cadena = stripcslashes($cadena);
+        //Eliminamos espacios que estén antes o después del texto
+        $cadena = trim($cadena);
+        return $cadena;
+     }
+
 }
