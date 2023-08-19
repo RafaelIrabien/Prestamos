@@ -57,4 +57,17 @@ class mainModel {
         return $output;
     }
 
+
+     /*-------- Función generar códigos aleatorios --------*/
+     protected static function generar_codigo_aleatorio($letra,$longitud,$numero) {
+        //Agregamos los números aleatorios
+        for ($i=1; $i <= $longitud ; $i++) { 
+            //rand() recoge un número al azar, de 0-9
+            $aleatorio = rand(0,9);
+            //Concatenamos la letra con el valor de $aleatorio
+            $letra.=$aleatorio;
+        }
+        return $letra."-".$numero;
+     }
+
 }
