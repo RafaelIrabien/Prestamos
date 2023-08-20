@@ -154,6 +154,30 @@ class mainModel {
                      </li>';
         }
 
+        //Variable que permitirá ir contando cuántas iteraciones va a dar
+        $ci = 0;
+        for ($i=$pagina; $i<=$N_paginas; $i++) { 
+            //Determinamos cuántos botones se generarán
+            if ($ci>=$botones) {
+                //Detenemos el ciclo
+                break;
+            } 
+
+            //Si estamos en la página actual
+            //se mostrará el botón sombreado
+            if ($pagina==$i) {
+                $tabla.='<li class="page-item">
+                            <a class="page-link active" href="'.$url.$i.'/">'.$i.'</a>
+                         </li>';
+            } else {
+                $tabla.='<li class="page-item">
+                            <a class="page-link" href="'.$url.$i.'/">'.$i.'</a>
+                         </li>';
+            }
+
+            $ci++;
+            
+        }
 
         if ($pagina==$N_paginas) {
             //Desabilitamos el botón de 'Siguiente'
