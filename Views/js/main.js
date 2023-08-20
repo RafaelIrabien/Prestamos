@@ -9,10 +9,12 @@ $(document).ready(function(){
 			$(this).removeClass('active');
 			iconBtn.removeClass('fa-rotate-180');
 			SubMenu.removeClass('show-nav-lateral-submenu');
+			
 		}else{
 			$(this).addClass('active');
 			iconBtn.addClass('fa-rotate-180');
 			SubMenu.addClass('show-nav-lateral-submenu');
+			
 		}
 	});
 

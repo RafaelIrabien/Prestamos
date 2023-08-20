@@ -83,6 +83,7 @@ body,html{
 .page-nav-tabs li a{
 	height: 40px;
 	line-height: 40px;
+	transition: 0.5s;
 }
 .page-nav-tabs li{
 	margin: 5px 20px;
@@ -95,7 +96,7 @@ body,html{
 	display: block;
 	text-align: center;
 	user-select: none;
-	transition: all .2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 	border-bottom: 2px solid transparent;
 }
 .page-nav-tabs li a.active{
@@ -326,9 +327,10 @@ table form{
 .nav-lateral-menu ul li ul a{
 	padding-left: 45px;
 }
-.show-nav-lateral-submenu{
+.show-nav-lateral-submenu {
 	display: block !important;
 }
+
 .nav-lateral-menu .fa-chevron-down,
 .nav-lateral-menu .fa-chevron-up{
 	float: right;
