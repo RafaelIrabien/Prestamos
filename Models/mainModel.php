@@ -132,7 +132,51 @@ class mainModel {
         }
      }
 
-     
+     /*-------- Función paginador de tablas --------*/
+     protected static function paginador_tablas($pagina,$N_paginas,$url,$botones) {
+        $tabla = '<nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">';
+
+        if ($pagina==1) {
+            //Desabilitamos el botón de 'Anterior'
+            $tabla.='<li class="page-item disabled">
+                     <a class="page-link">
+                        <i class="fas fa-angle-double-left"></i></a>
+                     </li>';
+        } else {
+            //Habilitamos el botón e icono de 'Anterior'
+            $tabla.='<li class="page-item">
+                     <a class="page-link" href="'.$url.'1/">
+                        <i class="fas fa-angle-double-left"></i></a>
+                     </li>
+                     <li class="page-item">
+                     <a class="page-link" href="'.$url.($pagina-1).'/">Anterior</a>
+                     </li>';
+        }
+
+
+        if ($pagina==$N_paginas) {
+            //Desabilitamos el botón de 'Siguiente'
+            $tabla.='<li class="page-item disabled">
+                     <a class="page-link">
+                        <i class="fas fa-angle-double-right"></i></a>
+                     </li>';
+        } else {
+            //Habilitamos el botón e icono de 'Siguiente'
+            $tabla.='<li class="page-item">
+                     <a class="page-link" href="'.$url.($pagina+1).'/">Siguiente</a>
+                     </li>
+                     <li class="page-item">
+                     <a class="page-link" href="'.$url.$N_paginas.'/">
+                        <i class="fas fa-angle-double-right"></i></a>
+                     </li>';
+        }
+        
+
+        $tabla.='</ul></nav>';
+        //Esta variable va a contener toda la paginación
+        return $tabla;
+     }
 
 
 }
