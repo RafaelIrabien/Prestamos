@@ -119,6 +119,19 @@ class mainModel {
         }
      }
 
+     /*-------- Función verificar fechas --------*/
+     protected static function verificar_fecha($fecha) {
+        $valores = explode('-', $fecha);
+        //checkdate: valida una fecha gregoriana
+        //(mes, dia, año)
+        if (count($valores)==3 && checkdate($valores[1], $valores[0], $valores[2])) {
+            //Si no tiene errores
+            return false;
+        } else {
+            return true;
+        }
+     }
+
      
 
 
