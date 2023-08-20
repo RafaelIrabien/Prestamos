@@ -109,4 +109,17 @@ class mainModel {
         return $cadena;
      }
 
+     /*-------- Función verificar datos --------*/
+     protected static function verificar_datos($filtro,$cadena) {
+        //preg_match: realiza una comparación con una expresión regular
+        if(preg_match("/^".$filtro."$/", $cadena)) {
+            return false;
+        } else {
+            return true;
+        }
+     }
+
+     
+
+
 }
