@@ -18,3 +18,6 @@
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
 
 <script src="<?php echo SERVER_URL; ?>Views/js/main.js" ></script>
+
+<!-- Alertas -->
+<script src="<?php echo SERVER_URL; ?>Views/js/alertas.js" ></script>
