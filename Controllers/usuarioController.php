@@ -41,6 +41,91 @@
                 exit();
             }
 
+
+            //Verificar integridad de los datos
+            if (mainModel::verificar_datos("[0-9-]{10,20}",$dni)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El DNI no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+           
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}",$nombre)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El nombre no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}",$apellido)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El apellido no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if ($telefono!="") {
+                if (mainModel::verificar_datos("[0-9()+]{8,20}",$telefono)) {
+                    $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"El teléfono no coincide con el formato solicitado",
+                        "Tipo"=>"error"
+                       ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }
+
+            if ($direccion!="") {
+                if (mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,190}",$direccion)) {
+                    $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"La dirección no coincide con el formato solicitado",
+                        "Tipo"=>"error"
+                       ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }
+
+            if (mainModel::verificar_datos("[a-zA-Z0-9]{1,35}",$usuario)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El nombre de usuario no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave1) || 
+                mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave2)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"Las claves no coinciden con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+                echo json_encode($alerta);
+                exit();
+            }
+
         }
 
 
