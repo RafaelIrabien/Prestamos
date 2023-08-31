@@ -114,20 +114,111 @@
                 exit();
             }
 
-            if (mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave1) || 
-                mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave2)) {
+            if (mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave1) || mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave2)){
+				$alerta=[
+					"Alerta"=>"simple",
+					"Titulo"=>"Ocurrió un error inesperado",
+					"Texto"=>"Las claves no coinciden con el formato solicitado",
+					"Tipo"=>"error"
+				];
+				echo json_encode($alerta);
+				exit();
+			}
+
+            /*
+            //Comprobando que el DNI no esté registrado en la BD
+            //Seleccionamos el DNI registrado siempre y cuando sea el
+            //que se está recibiendo en el formulario
+            $check_dni = mainModel::ejecutar_consulta_simple("SELECT usuario_dni FROM usuario WHERE usuario_dni='$dni'");
+            //rowCount(): Devuelve el número de filas afectadas por 
+            //la última sentencia SQL
+            if ($check_dni->rowCount()>0) {
                 $alerta = [
                     "Alerta"=>"simple",
                     "Titulo"=>"Ocurrió un error inesperado",
-                    "Texto"=>"Las claves no coinciden con el formato solicitado",
+                    "Texto"=>"El DNI ingresado ya se encuentra registrado en el sistema",
                     "Tipo"=>"error"
                    ];
                 echo json_encode($alerta);
                 exit();
             }
 
-        }
+
+            //Comprobando que el usuario no esté registrado en la BD
+            $check_user = mainModel::ejecutar_consulta_simple("SELECT usuario_usuario FROM usuario WHERE usuario_usuario='$usuario'");
+            if ($check_user->rowCount()>0) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El nombre de usuario ingresado ya se encuentra registrado en el sistema",
+                    "Tipo"=>"error"
+                   ];
+                echo json_encode($alerta);
+                exit();
+            }
 
 
-    }
-    
+             //Comprobando que el email no esté registrado en la BD
+            if ($email!="") {
+                //filter_var: Filtra una variable con el filtro 
+                //que se indique
+                //Comprobamos si el email ingresado es un email valido
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                     //Comprobamos si existe en la BD
+                     $check_email = mainModel::ejecutar_consulta_simple("SELECT usuario_email FROM usuario WHERE usuario_email='$email'");
+                     if ($check_email->rowCount()>0) {
+                         $alerta = [
+                             "Alerta"=>"simple",
+                             "Titulo"=>"Ocurrió un error inesperado",
+                             "Texto"=>"El correo ingresado ya se encuentra registrado en el sistema",
+                             "Tipo"=>"error"
+                            ];
+                         echo json_encode($alerta);
+                         exit();
+                     }
+                } else {
+                    $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"Ha ingresado un correo no válido",
+                        "Tipo"=>"error"
+                       ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+                
+            }
+*/
+
+            //Comprobando las claves
+            if($clave1!=$clave2){
+				$alerta=[
+					"Alerta"=>"simple",
+					"Titulo"=>"Ocurrió un error inesperado",
+					"Texto"=>"Las claves que acaba de ingresar no coinciden",
+					"Tipo"=>"error"
+				];
+				echo json_encode($alerta);
+				exit();
+			}else{
+				$clave=mainModel::encryption($clave1);
+			}
+            
+
+            //Comprobando el privilegio
+            if ($privilegio<1 || $privilegio>3){
+				$alerta=[
+					"Alerta"=>"simple",
+					"Titulo"=>"Ocurrió un error inesperado",
+					"Texto"=>"El privilegio seleccionado no es válido",
+					"Tipo"=>"error"
+				];
+				echo json_encode($alerta);
+				exit();
+			}
+
+
+        } //FINALIZA agregar_usuario_controlador()
+
+
+    } //FINALIZA CONTROLADOR
