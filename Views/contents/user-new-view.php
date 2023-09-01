@@ -82,13 +82,13 @@
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="usuario_clave_1" class="bmd-label-floating">Contraseña</label>
-							<input type="text" class="form-control" name="usuario_clave_1_reg" id="usuario_clave_1" maxlength="100" required="" >
+							<input type="password" class="form-control" name="usuario_clave_1_reg" id="usuario_clave_1" maxlength="100" required="" >
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="usuario_clave_2" class="bmd-label-floating">Repetir contraseña</label>
-							<input type="text" class="form-control" name="usuario_clave_2_reg" id="usuario_clave_2" maxlength="100" required="" >
+							<input type="password" class="form-control" name="usuario_clave_2_reg" id="usuario_clave_2" maxlength="100" required="" >
 						</div>
 					</div>
 				</div>
@@ -106,7 +106,7 @@
 						<div class="form-group">
 							<select class="form-control" name="usuario_privilegio_reg">
 								<option value="" selected="">Seleccione una opción</option>
-								<option value="7">Control total</option>
+								<option value="1">Control total</option>
 								<option value="2">Edición</option>
 								<option value="3">Registrar</option>
 							</select>

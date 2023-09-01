@@ -29,7 +29,7 @@
 
 
             //Comprobar que los campos requeridos estén llenos
-            if ($dni=="" || $nombre=="" || $apellido=="" || $usuario=="" || $clave1=="" || $clave2="") {
+            if ($dni=="" || $nombre=="" || $apellido=="" || $usuario=="" || $clave1=="" || $clave2=="") {
                 $alerta = [
                          "Alerta"=>"simple",
                          "Titulo"=>"Ocurrió un error inesperado",
@@ -125,7 +125,7 @@
 				exit();
 			}
 
-            /*
+            
             //Comprobando que el DNI no esté registrado en la BD
             //Seleccionamos el DNI registrado siempre y cuando sea el
             //que se está recibiendo en el formulario
@@ -188,7 +188,7 @@
                 }
                 
             }
-*/
+
 
             //Comprobando las claves
             if($clave1!=$clave2){
@@ -216,6 +216,42 @@
 				echo json_encode($alerta);
 				exit();
 			}
+
+            $datos_usuario_reg = [
+                //Colocamos los índices que están en el modelo
+                "DNI"=>$dni,
+                "Nombre"=>$nombre,
+                "Apellido"=>$apellido,
+                "Telefono"=>$telefono,
+                "Direccion"=>$direccion,
+                "Email"=>$email,
+                "Usuario"=>$usuario,
+                "Clave"=>$clave,
+                "Estado"=>"Activo",
+                "Privilegio"=>$privilegio
+            ];
+
+            //Llamamos a la función para registrar usuarios
+            $agregar_usuario=usuarioModel::agregar_usuario_modelo($datos_usuario_reg);
+            //Comprobamos si se ha hecho un registro en la BD
+            if ($agregar_usuario->rowCount()==1) {
+                $alerta=[
+					"Alerta"=>"limpiar",
+					"Titulo"=>"Usuario registrado",
+					"Texto"=>"Los datos del usuario han sido registrados con éxito",
+					"Tipo"=>"success"
+				];
+            } else {
+                $alerta=[
+					"Alerta"=>"simple",
+					"Titulo"=>"Ocurrió un error inesperado",
+					"Texto"=>"No se pudo registrar el usuario",
+					"Tipo"=>"error"
+				];
+				
+            }
+            echo json_encode($alerta);
+            
 
 
         } //FINALIZA agregar_usuario_controlador()
