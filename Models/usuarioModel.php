@@ -24,8 +24,8 @@
             $query->bindParam(":Estado",$datos['Estado']);
             $query->bindParam(":Privilegio",$datos['Privilegio']);
 
-            $respuesta = $query->execute();
-            return $respuesta;
+            $query->execute();
+            return $query;
         }
 
     }

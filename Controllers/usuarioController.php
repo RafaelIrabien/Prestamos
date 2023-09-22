@@ -227,7 +227,7 @@
                 "Email"=>$email,
                 "Usuario"=>$usuario,
                 "Clave"=>$clave,
-                "Estado"=>"Activo",
+                "Estado"=>"Activa",
                 "Privilegio"=>$privilegio
             ];
 
@@ -241,7 +241,16 @@
 					"Texto"=>"Los datos del usuario han sido registrados con éxito",
 					"Tipo"=>"success"
 				];
-            } else {
+            } 
+            if($agregar_usuario->rowCount()==1){
+				$alerta=[
+					"Alerta"=>"limpiar",
+					"Titulo"=>"usuario registrado",
+					"Texto"=>"Los datos del usuario han sido registrados con exito",
+					"Tipo"=>"success"
+				];
+			}
+            else {
                 $alerta=[
 					"Alerta"=>"simple",
 					"Titulo"=>"Ocurrió un error inesperado",
