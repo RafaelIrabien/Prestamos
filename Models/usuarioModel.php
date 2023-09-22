@@ -12,7 +12,8 @@
                     VALUES(:DNI,:Nombre,:Apellido,:Telefono,:Direccion,:Email,:Usuario,:Clave,:Estado,:Privilegio)";
 
             $query = $conexion->prepare($sql);
-                    
+            
+            //Cambiamos los marcadores por los valores reales
             $query->bindParam(":DNI",$datos['DNI']);
             $query->bindParam(":Nombre",$datos['Nombre']);
             $query->bindParam(":Apellido",$datos['Apellido']);
