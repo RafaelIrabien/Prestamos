@@ -28,6 +28,7 @@ class loginController extends loginModel {
                 });
             </script>
             ';
+            exit();
         }
 
         //Verificar integridad de los datos
@@ -42,6 +43,7 @@ class loginController extends loginModel {
                 });
             </script>
             ';
+            exit();
         }
 
         if (mainModel::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave)) {
@@ -55,6 +57,7 @@ class loginController extends loginModel {
                 });
             </script>
             ';
+            exit();
         }
 
         //Se envia la clave encriptada al modelo 

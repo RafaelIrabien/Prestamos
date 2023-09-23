@@ -21,6 +21,8 @@
 		if ($Vistas=="login" || $Vistas=="404") {
 			require_once "./Views/contents/".$Vistas."-view.php";
 		} else {
+			//Se inicia la sesión
+			session_start(['name'=>'SPM']);
 	?>
 	
 	<!-- Main container -->
