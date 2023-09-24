@@ -106,5 +106,23 @@ class loginController extends loginModel {
         }
         
         
-     }
+     } /*Fin del controlador */
+
+     /*-------- Forzar cierre de sesión --------*/
+     public function forzar_cierre_sesion_controlador() {
+        //Vaciamos la sesión
+        session_unset();
+        //Destruimos la sesión
+        session_destroy();
+        
+        //headers_sent sirve para verificar si se están mandando encabezados
+        if (headers_sent()) {
+            return "<script> window.location.href='".SERVER_URL."login/'; </script>";
+        } else { 
+            return header("Location: ".SERVER_URL."login/");
+        }
+        
+
+     } /*Fin del controlador */
+
 }

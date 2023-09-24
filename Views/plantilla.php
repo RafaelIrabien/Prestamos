@@ -23,6 +23,18 @@
 		} else {
 			//Se inicia la sesión
 			session_start(['name'=>'SPM']);
+
+			require_once "./Controllers/loginController.php";
+			$lc = new loginController();
+
+			//Verificamos si el usuario ha iniciado sesión
+			if (!isset($_SESSION['token_spm']) || !isset($_SESSION['usuario_spm']) 
+			   || !isset($_SESSION['privilegio_spm']) || !isset($_SESSION['id_spm'])) {
+				echo $lc->forzar_cierre_sesion_controlador();
+				exit();
+			}
+	
+			
 	?>
 	
 	<!-- Main container -->
