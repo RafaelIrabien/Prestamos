@@ -57,6 +57,7 @@
 	</main>
 	
     <?php 
+			include "./Views/inc/LogOut.php";
 		}
 		include "./Views/inc/Script.php"; 
 	?>

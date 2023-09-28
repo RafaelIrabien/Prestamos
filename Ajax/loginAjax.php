@@ -7,8 +7,12 @@ require_once "../Config/APP.php";
 //para ejecutar aqui los controladores y algunas funciones.
 //Sino, quiere decir que alguien esta intentando acceder a 
 //este archivo desde el navegador
-if () {
-   
+if (isset($_POST['token']) && isset($_POST['usuario'])) {
+    /*-------- Instancia al controlador --------*/
+    require_once "../Controllers/loginController.php";
+    $ins_login = new loginController();
+
+    echo $ins_login->cerrar_sesion_controlador();
 
 } else {
     session_start(['name'=>'SPM']);

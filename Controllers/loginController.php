@@ -108,7 +108,7 @@ class loginController extends loginModel {
         
      } /*Fin del controlador */
 
-     /*-------- Forzar cierre de sesión --------*/
+     /*-------- Controlador forzar cierre de sesión --------*/
      public function forzar_cierre_sesion_controlador() {
         //Vaciamos la sesión
         session_unset();
@@ -121,8 +121,37 @@ class loginController extends loginModel {
         } else { 
             return header("Location: ".SERVER_URL."login/");
         }
-        
 
+     } /*Fin del controlador */
+
+
+     /*-------- Controlador cierre de sesión --------*/
+     public function cerrar_sesion_controlador() {
+        session_start(['name'=>'SPM']);
+
+        $token = mainModel::decryption($_POST['token']);
+        $usuario = mainModel::decryption($_POST['usuario']);
+
+        if($token==$_SESSION['token_spm'] && $usuario== $_SESSION['usuario_spm']) {
+            session_unset();
+            session_destroy();
+
+            //Redireccionamos al usuario al login
+            $alerta = [
+                "Alerta"=>"redireccionar",
+                "URL"=>SERVER_URL."login/"
+            ];
+        } else {
+            $alerta = [
+                "Alerta"=>"simple",
+                "Titulo"=>"Ocurrió un error inesperado",
+                "Texto"=>"No se pudo cerrar la sesión en el sistema",
+                "Tipo"=>"error"
+               ];
+
+        }
+        echo json_encode($alerta);
+        
      } /*Fin del controlador */
 
 }
