@@ -24,6 +24,10 @@
 			//Se inicia la sesión
 			session_start(['name'=>'SPM']);
 
+			//Tendra todos los parámetros de la url
+			//Se separará mediante una diagonal
+			$pagina = explode("/", $_GET['views']);
+
 			require_once "./Controllers/loginController.php";
 			$lc = new loginController();
 

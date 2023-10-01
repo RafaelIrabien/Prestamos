@@ -263,7 +263,144 @@
             
 
 
-        } //FINALIZA agregar_usuario_controlador()
+        } //Finaliza agregar_usuario_controlador()
+
+
+        /*-------- Controlador agregar usuario --------*/
+        public function paginador_usuario_controlador($pagina,$registros,$privilegio,$id,$url,$busqueda) {
+            //Limpiamos las variables
+            $pagina = mainModel::limpiar_cadena($pagina);
+            $registros = mainModel::limpiar_cadena($registros);
+            $privilegio = mainModel::limpiar_cadena($privilegio);
+            $id = mainModel::limpiar_cadena($id);
+
+            $url = mainModel::limpiar_cadena($url);
+            $url = SERVER_URL.$url."/";
+
+            $busqueda = mainModel::limpiar_cadena($busqueda);
+            $tabla = "";
+
+            //1.- Si la pagina esta definida y es mayor a 0
+            //2.- Convertimos la variable en entero
+            //3.-Si la variable pagina no viene definida o no es un numero
+            //se envia al usuario a la página número 1
+            $pagina = (isset($pagina) && $pagina>0) ? (int) $pagina : 1 ;
+
+            //Saber desde qué registro se empezará a contar
+            $inicio = ($pagina>0) ? (($pagina*$registros)-$registros) : 0 ;
+
+            if (isset($busqueda) && $busqueda!="") {
+                $consulta = "SELECT SQL_CALC_FOUND_ROWS * 
+                             FROM usuario
+                             WHERE ((usuario_id!='$id'
+                             AND usuario_id!='1') 
+                             AND (usuario_dni LIKE '%$busqueda%'
+                             OR usuario_nombre LIKE '%$busqueda%'
+                             OR usuario_apellido LIKE '%$busqueda%'
+                             OR usuario_telefono LIKE '%$busqueda%'
+                             OR usuario_email LIKE '%$busqueda%'
+                             OR usuario_usuario LIKE '%$busqueda%'
+                             ))
+                             ORDER BY usuario_nombre ASC
+                             LIMIT $inicio,$registros";
+            } else {
+                $consulta = "SELECT SQL_CALC_FOUND_ROWS * 
+                             FROM usuario
+                             WHERE usuario_id!='$id'
+                             AND usuario_id!='1'
+                             ORDER BY usuario_nombre ASC
+                             LIMIT $inicio,$registros";
+            }
+
+            $conexion = mainModel::conectar();
+
+            $datos = $conexion->query($consulta);
+            //De esta manera tenemos todos los datos
+            $datos = $datos->fetchAll();
+
+            //Se cuentan los registros que muestra cualquiera
+            //de las 2 consultas anteriores
+            $total = $conexion->query("SELECT FOUND_ROWS()");
+            //Convertimos la variable a entero y vamos a saber
+            //cuántos registros tiene
+            $total = (int) $total->fetchColumn();
+
+            //Se redondea el número de páginas en caso de dar un número decimal
+            $N_paginas = ceil($total/$registros);
+            
+            $tabla.='<div class="table-responsive">
+            <table class="table table-dark table-sm">
+                <thead>
+                    <tr class="text-center roboto-medium">
+                        <th>#</th>
+                        <th>DNI</th>
+                        <th>NOMBRE</th>
+                        <th>TELÉFONO</th>
+                        <th>USUARIO</th>
+                        <th>EMAIL</th>
+                        <th>ACTUALIZAR</th>
+                        <th>ELIMINAR</th>
+                    </tr>
+                </thead>
+                <tbody>';
+            
+            if ($total>=1 && $pagina<=$N_paginas) {
+                //Se muestran los registros dentro de la tabla
+                $contador = $inicio+1;
+                //Nos mostrará desde que registro se está mostrando
+                $reg_inicio = $inicio+1;
+                foreach ($datos as $rows) {
+                    $tabla.='<tr class="text-center">
+                        <td>'.$contador.'</td>
+                        <td>'.$rows['usuario_dni'].'</td>
+                        <td>'.$rows['usuario_nombre'].' '.$rows['usuario_apellido'].'</td>
+                        <td>'.$rows['usuario_telefono'].'</td>
+                        <td>'.$rows['usuario_usuario'].'</td>
+                        <td>'.$rows['usuario_email'].'</td>
+                        <td>
+                            <a href="'.SERVER_URL.'user-update/'.mainModel::encryption($rows['usuario_id']).'/" class="btn btn-success">
+                                <i class="fas fa-sync-alt"></i>	
+                            </a>
+                        </td>
+                        <td>
+                            <form class="FormularioAjax" action="'.SERVER_URL.'ajax/usuarioAjax.php" method="POST" data-form="delete" autocomplete="off">
+                                <input type="hidden" name="usuario_id_del" value="'.mainModel::encryption($rows['usuario_id']).'">
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>';
+                    $contador++;
+                }
+                $reg_final = $contador-1;
+
+            } else {
+                //Comprobamos si hay registros
+                if ($total>=1) {
+                    $tabla.='<tr class="text-center" ><td colspan="9">
+                    <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga click aca para recargar el listado</a></td></tr>';
+                } else{
+                $tabla.='<tr class="text-center" ><td colspan="9">No hay registros en el sistema</td></tr>';
+                }
+            }
+            $tabla.='</tbody></table></div>';
+
+            //Mostramos la longitud de usuarios(id-id) por pagina 
+            //y el total de registrados
+            if ($total>=1) {
+                $tabla.='<p class="text-right">Mostrando usuario '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p>';
+            }
+
+            //Comprobamos si hay registros y si estamos en una página correcta
+            if($total>=1 && $pagina<=$N_paginas) {
+                $tabla.=mainModel::paginador_tablas($pagina,$N_paginas,$url,7);
+            }
+
+            return $tabla;
+
+            
+        } //Finaliza paginador_usuario_controlador()
 
 
     } //FINALIZA CONTROLADOR
