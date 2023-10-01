@@ -29,4 +29,18 @@
             return $query;
         }
 
+        /*-------- Modelo eliminar usuario --------*/
+        protected static function eliminar_usuario_modelo($id) {
+            $conexion = mainModel::conectar();
+
+            $sql = "DELETE FROM usuario WHERE usuario_id=:ID";
+            $query = $conexion->prepare($sql);
+
+            //Agregamos el marcador
+            $query->bindParam(":ID",$id);
+            $query->execute();
+
+            return $query;
+        }
+
     }

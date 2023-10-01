@@ -388,7 +388,7 @@
 
             //Mostramos la longitud de usuarios(id-id) por pagina 
             //y el total de registrados
-            if ($total>=1) {
+            if ($total>=1 && $pagina<=$N_paginas) {
                 $tabla.='<p class="text-right">Mostrando usuario '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p>';
             }
 
