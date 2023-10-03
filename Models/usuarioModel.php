@@ -43,4 +43,24 @@
             return $query;
         }
 
+        /*-------- Modelo datos usuario --------*/
+        protected static function datos_usuario_modelo($tipo,$id) {
+            if ($tipo=="Unico") {
+                $conexion = mainModel::conectar();
+                $sql = "SELECT * FROM usuario WHERE usuario_id=:ID";
+                $query = $conexion->prepare($sql);
+
+                $query->bindParam(":ID",$id);
+
+            } elseif ($tipo=="Conteo") {
+                $conexion = mainModel::conectar();
+                //Contamos los demás usuarios menos el primero o principal
+                $sql = "SELECT usuario_id FROM usuario WHERE usuario_id!='1'";
+                $query = $conexion->prepare($sql);
+            }
+            $query->execute();
+            return $query;
+            
+        }
+
     }

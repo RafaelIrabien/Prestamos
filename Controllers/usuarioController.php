@@ -399,6 +399,7 @@
             
         } //Finaliza paginador_usuario_controlador()
 
+
         /*-------- Controlador eliminar usuario --------*/
         public function eliminar_usuario_controlador() {
             //Recibimos el id del usuario
@@ -482,6 +483,9 @@
             
 
         } //Finaliza eliminar_usuario_controlador()
+
+
+        
 
 
     } //FINALIZA CONTROLADOR
