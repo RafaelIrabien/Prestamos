@@ -485,7 +485,17 @@
         } //Finaliza eliminar_usuario_controlador()
 
 
-        
+        /*-------- Controlador datos usuario --------*/
+        public function datos_usuario_controlador($tipo,$id) {
+            $tipo = mainModel::limpiar_cadena($tipo);
+
+            //Desencriptamos y limpiamos la id de usuario
+            $id = mainModel::decryption($id);
+            $id = mainModel::limpiar_cadena($id);
+
+            //Lo enviamos al modelo y retornamos el valor
+            return usuarioModel::datos_usuario_modelo($tipo,$id);
+        } //Finaliza datos_usuario_controlador()
 
 
     } //FINALIZA CONTROLADOR

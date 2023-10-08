@@ -1,3 +1,14 @@
+<?php 
+    //Comprobar si el id que esta pasando a la url es igual
+    //al id del usuario que va a iniciar sesión
+    if ($lc->encryption($_SESSION['id_spm'])!=$pagina[1]) {
+        if ($_SESSION['privilegio_spm']!=1) {
+            echo $lc->forzar_cierre_sesion_controlador();
+            exit();
+        }
+    }
+?>
+
 <!-- Page header -->
 <div class="full-box page-header">
     <h3 class="text-left">
@@ -8,6 +19,11 @@
     </p>
 </div>
 
+
+<?php
+    //Solo se le mostrará a los usuarios con privilegio nivel 1
+    if ($_SESSION['privilegio_spm']==1) {
+ ?>
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">
         <li>
@@ -20,10 +36,23 @@
             <a href="<?php echo SERVER_URL; ?>user-search/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR USUARIO</a>
         </li>
     </ul>	
-</div>
+</div><?php } ?>
+
 
 <!-- Content -->
 <div class="container-fluid">
+    <?php 
+        require_once "./Controllers/usuarioController.php";
+        $ins_usuario = new usuarioController();
+
+        $datos_usuario = $ins_usuario->datos_usuario_controlador("Unico",$pagina[1]);
+       
+        //Obtenemos cuántos registros han sido afectados o seleccionados
+        if ($datos_usuario->rowCount()==1) {
+            //Almacenamos los datos que tenga la consulta que
+            //hemos realizado
+            $campos = $datos_usuario->fetch();
+    ?>
     <form action="" class="form-neon" autocomplete="off">
         <fieldset>
             <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
@@ -158,10 +187,16 @@
             <button type="submit" class="btn btn-raised btn-success btn-sm"><i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR</button>
         </p>
     </form>
+    <?php 
+        } else {
+            # code...
+        
+    ?>
 
     <div class="alert alert-danger text-center" role="alert">
         <p><i class="fas fa-exclamation-triangle fa-5x"></i></p>
         <h4 class="alert-heading">¡Ocurrió un error inesperado!</h4>
         <p class="mb-0">Lo sentimos, no podemos mostrar la información solicitada debido a un error.</p>
     </div>
+    <?php } ?>
 </div>

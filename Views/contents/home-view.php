@@ -51,13 +51,19 @@
     </a>
 
     <?php
+        //Solo se le mostrará a los usuarios con privilegio nivel 1
         if ($_SESSION['privilegio_spm']==1) {
+        
+        require_once "./Controllers/usuarioController.php";
+        $ins_usuario = new usuarioController();
+        $total_usuarios = $ins_usuario->datos_usuario_controlador("Conteo",0);
     ?>
     <a href="<?php echo SERVER_URL; ?>user-list/" class="tile">
         <div class="tile-tittle">Usuarios</div>
         <div class="tile-icon">
             <i class="fas fa-user-secret fa-fw"></i>
-            <p>50 Registrados</p>
+            <!-- Se cuentan los usuarios registrados -->
+            <p><?php echo $total_usuarios->rowCount(); ?> Registrados</p>
         </div>
     </a>
     <?php } ?>
