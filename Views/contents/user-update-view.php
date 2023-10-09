@@ -53,7 +53,8 @@
             //hemos realizado
             $campos = $datos_usuario->fetch();
     ?>
-    <form action="" class="form-neon" autocomplete="off">
+    <form class="form-neon FormularioAjax" action="<?php echo SERVER_URL; ?>ajax/usuarioAjax.php" method="POST" data-form="update" autocomplete="off">
+        <input type="hidden" name="usuario_id_up" value="<?php echo $pagina[1]; ?>">
         <fieldset>
             <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
             <div class="container-fluid">
@@ -61,32 +62,32 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_dni" class="bmd-label-floating">DNI</label>
-                            <input type="text" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni_up" id="usuario_dni" maxlength="20">
+                            <input type="text" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni_up" id="usuario_dni" maxlength="20" value="<?php echo $campos['usuario_dni']; ?>">
                         </div>
                     </div>
                     
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_nombre_up" id="usuario_nombre" maxlength="35">
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_nombre_up" id="usuario_nombre" maxlength="35" value="<?php echo $campos['usuario_nombre'] ?>">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido_up" id="usuario_apellido" maxlength="35">
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido_up" id="usuario_apellido" maxlength="35" value="<?php echo $campos['usuario_apellido']; ?>">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                            <input type="text" pattern="[0-9()+]{8,20}" class="form-control" name="usuario_telefono_up" id="usuario_telefono" maxlength="20">
+                            <input type="text" pattern="[0-9()+]{8,20}" class="form-control" name="usuario_telefono_up" id="usuario_telefono" maxlength="20" value="<?php echo $campos['usuario_telefono']; ?>">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-                            <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,190}" class="form-control" name="usuario_direccion_up" id="usuario_direccion" maxlength="190">
+                            <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,190}" class="form-control" name="usuario_direccion_up" id="usuario_direccion" maxlength="190" value="<?php echo $campos['usuario_direccion']; ?>">
                         </div>
                     </div>
                 </div>
@@ -100,24 +101,49 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_usuario" class="bmd-label-floating">Nombre de usuario</label>
-                            <input type="text" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario_up" id="usuario_usuario" maxlength="35">
+                            <input type="text" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario_up" id="usuario_usuario" maxlength="35" value="<?php echo $campos['usuario_usuario']; ?>">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_email" class="bmd-label-floating">Email</label>
-                            <input type="email" class="form-control" name="usuario_email_up" id="usuario_email" maxlength="70">
+                            <input type="email" class="form-control" name="usuario_email_up" id="usuario_email" maxlength="70" value="<?php echo $campos['usuario_email']; ?>">
                         </div>
                     </div>
+
+                    <?php
+                        if ($_SESSION['privilegio_spm']==1 && $campos['usuario_id']!=1) {
+                     ?>
                     <div class="col-12">
                         <div class="form-group">
-                            <span>Estado de la cuenta  &nbsp; <span class="badge badge-info">Activa</span></span>
+                            <span>Estado de la cuenta  &nbsp; 
+                            <?php if ($campos['usuario_estado']=="Activa") {
+                               echo '<span class="badge badge-info">Activa</span>';
+                            } else {
+                                echo '<span class="badge badge-danger">Deshabilitada</span>';
+                            }
+                              ?> 
+                            </span>
+
                             <select class="form-control" name="usuario_estado_up">
-                                <option value="Activa" selected="" >Activa</option>
-                                <option value="Deshabilitada">Deshabilitada</option>
+                                <option value="Activa" 
+                                <?php 
+                                 if ($campos['usuario_estado']=="Activa") {
+                                    echo 'selected=""';
+                                } 
+                                ?>
+                                >Activa</option>
+                                <option value="Deshabilitada"
+                                <?php 
+                                 if ($campos['usuario_estado']=="Deshabilitada") {
+                                    echo 'selected=""';
+                                } 
+                                ?>
+                                >Deshabilitada</option>
                             </select>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </fieldset>
@@ -142,6 +168,10 @@
                 </div>
             </div>
         </fieldset>
+
+        <?php
+            if ($_SESSION['privilegio_spm']==1 && $campos['usuario_id']!=1) {
+         ?>
         <br><br><br>
         <fieldset>
             <legend><i class="fas fa-medal"></i> &nbsp; Nivel de privilegio</legend>
@@ -153,16 +183,19 @@
                         <p><span class="badge badge-dark">Registrar</span> Solo permisos para registrar</p>
                         <div class="form-group">
                             <select class="form-control" name="usuario_privilegio_up">
-                                <option value="" selected="" disabled="">Seleccione una opción</option>
-                                <option value="1">Control total</option>
-                                <option value="2">Edición</option>
-                                <option value="3">Registrar</option>
+                                <option value="1" <?php if ($campos['usuario_privilegio']==1) { echo 'selected=""'; } ?>>Control total <?php if ($campos['usuario_privilegio']==1) { echo '(Actual)'; } ?></option>
+
+                                <option value="2" <?php if ($campos['usuario_privilegio']==2) { echo 'selected=""'; } ?>>Edición <?php if ($campos['usuario_privilegio']==2) { echo '(Actual)'; } ?></option>
+
+                                <option value="3" <?php if ($campos['usuario_privilegio']==3) { echo 'selected=""'; } ?>>Registrar <?php if ($campos['usuario_privilegio']==3) { echo '(Actual)'; } ?></option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
         </fieldset>
+        <?php } ?>
+
         <br><br><br>
         <fieldset>
             <p class="text-center">Para poder guardar los cambios en esta cuenta debe de ingresar su nombre de usuario y contraseña</p>
@@ -183,14 +216,22 @@
                 </div>
             </div>
         </fieldset>
+        
+        <!-- Comprobamos si la copia es propia o impropia -->
+        <?php 
+            if ($lc->encryption($_SESSION['id_spm'])!=$pagina[1]) {
+         ?>
+        <input type="hidden" name="tipo_cuenta" value="Impropia">
+        <?php } else { ?>
+        <input type="hidden" name="tipo_cuenta" value="Propia">
+        <?php } ?>
+
         <p class="text-center" style="margin-top: 40px;">
             <button type="submit" class="btn btn-raised btn-success btn-sm"><i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR</button>
         </p>
     </form>
     <?php 
         } else {
-            # code...
-        
     ?>
 
     <div class="alert alert-danger text-center" role="alert">
