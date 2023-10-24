@@ -111,6 +111,7 @@
                         </div>
                     </div>
 
+                    
                     <?php
                         if ($_SESSION['privilegio_spm']==1 && $campos['usuario_id']!=1) {
                      ?>
@@ -217,7 +218,7 @@
             </div>
         </fieldset>
         
-        <!-- Comprobamos si la copia es propia o impropia -->
+        <!-- Comprobamos si la cuenta es propia o impropia -->
         <?php 
             if ($lc->encryption($_SESSION['id_spm'])!=$pagina[1]) {
          ?>

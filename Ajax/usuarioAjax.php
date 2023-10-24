@@ -7,7 +7,7 @@ require_once "../Config/APP.php";
 //para ejecutar aqui los controladores y algunas funciones.
 //Sino, quiere decir que alguien esta intentando acceder a 
 //este archivo desde el navegador
-if (isset($_POST['usuario_dni_reg']) || isset($_POST['usuario_id_del'])) {
+if (isset($_POST['usuario_dni_reg']) || isset($_POST['usuario_id_del']) || isset($_POST['usuario_id_up'])) {
     /*-------- Instancia al controlador --------*/
     require_once "../Controllers/usuarioController.php";
     $ins_usuario = new usuarioController();
@@ -24,6 +24,12 @@ if (isset($_POST['usuario_dni_reg']) || isset($_POST['usuario_id_del'])) {
     if (isset($_POST['usuario_id_del'])) {
         //Ejecutamos el controlador
         echo $ins_usuario->eliminar_usuario_controlador();
+    }
+
+    /*-------- Actualizar un usuario --------*/
+    if (isset($_POST['usuario_id_up'])) {
+        //Ejecutamos el controlador
+        echo $ins_usuario->actualizar_usuario_controlador();
     }
 
 } else {
