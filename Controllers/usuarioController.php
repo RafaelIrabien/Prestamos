@@ -783,6 +783,69 @@
                 $clave = $campos['usuario_clave'];
            }
 
+           //Comprobando credenciales para actualizar datos
+           if ($tipo_cuenta=="Propia") {
+            $check_cuenta = mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM usuario WHERE usuario_usuario='$admin_usuario' AND usuario_clave='$admin_clave' AND usuario_id='$id'");
+
+           } else {
+                //Agregamos esto para usar las variables de sesión que tienen los niveles de privilegio
+                session_start(['name'=>'SPM']);
+                if ($_SESSION['privilegio_spm']!=1) {
+                    $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"No tienes los permisos necesarios para realizar esta acción",
+                        "Tipo"=>"error"
+                       ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+                $check_cuenta = mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM usuario WHERE usuario_usuario='$admin_usuario' AND usuario_clave='$admin_clave'");
+           }
+
+           //Contar cuántos registros fueron seleccionados con la consulta anterior
+           if ($check_cuenta->rowCount()<=0) {
+               $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"Nombre y contraseña de administrador no válidos",
+                        "Tipo"=>"error"
+                       ];
+                    echo json_encode($alerta);
+                    exit();
+           }
+
+           //Preparando datos para enviarlos al modelo
+           $datos_usuario_up = [
+                    "DNI"=>$dni,
+                    "Nombre"=>$nombre,
+                    "Apellido"=>$apellido,
+                    "Telefono"=>$telefono,
+                    "Direccion"=>$direccion,
+                    "Email"=>$email,
+                    "Usuario"=>$usuario,
+                    "Clave"=>$clave,
+                    "Estado"=>$estado,
+                    "Privilegio"=>$privilegio,
+                    "ID"=>$id
+           ];
+
+           if (usuarioModel::actualizar_usuario_modelo($datos_usuario_up)) {
+                $alerta = [
+                        "Alerta"=>"recargar",
+                        "Titulo"=>"Datos actualizados",
+                        "Texto"=>"Los datos han sido actualizados con éxito",
+                        "Tipo"=>"success"
+                       ];
+           } else {
+                $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"No hemos podido actualizar los datos, por favor intente nuevamente",
+                        "Tipo"=>"error"
+                       ];
+           }
+           echo json_encode($alerta);
            
            
            
