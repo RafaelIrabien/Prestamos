@@ -62,14 +62,14 @@
  ?>
 
 <div class="container-fluid">
-    <form action="">
+    <form class="FormularioAjax" action="<?php echo SERVER_URL; ?>ajax/buscadorAjax.php" method="POST" data-form="search" autocomplete="off">
         <input type="hidden" name="modulo" value="usuario">
         <input type="hidden" name="eliminar_busqueda" value="eliminar">
         <div class="container-fluid">
             <div class="row justify-content-md-center">
                 <div class="col-12 col-md-6">
                     <p class="text-center" style="font-size: 20px;">
-                        Resultados de la busqueda <strong>“Buscar”</strong>
+                        Resultados de la busqueda <strong>“<?php echo $_SESSION["busqueda_usuario"]; ?>”</strong>
                     </p>
                 </div>
                 <div class="col-12">
@@ -83,109 +83,13 @@
 </div>
 
 <div class="container-fluid">
-    <div class="table-responsive">
-        <table class="table table-dark table-sm">
-            <thead>
-                <tr class="text-center roboto-medium">
-                    <th>#</th>
-                    <th>DNI</th>
-                    <th>NOMBRE</th>
-                    <th>APELLIDO</th>
-                    <th>TELÉFONO</th>
-                    <th>USUARIO</th>
-                    <th>EMAIL</th>
-                    <th>ACTUALIZAR</th>
-                    <th>ELIMINAR</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center" >
-                    <td>1</td>
-                    <td>03045643</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>APELLIDO DE USUARIO</td>
-                    <td>2345456</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>ADMIN@ADMIN.COM</td>
-                    <td>
-                        <a href="<?php echo SERVER_URL; ?>user-update/" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i>	
-                        </a>
-                    </td>
-                    <td>
-                        <form action="">
-                            <button type="button" class="btn btn-warning">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                <tr class="text-center" >
-                    <td>2</td>
-                    <td>03045643</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>APELLIDO DE USUARIO</td>
-                    <td>2345456</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>ADMIN@ADMIN.COM</td>
-                    <td>
-                        <a href="user-update/" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i>	
-                        </a>
-                    </td>
-                    <td>
-                        <form action="">
-                            <button type="button" class="btn btn-warning">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                <tr class="text-center" >
-                    <td>3</td>
-                    <td>03045643</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>APELLIDO DE USUARIO</td>
-                    <td>2345456</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>ADMIN@ADMIN.COM</td>
-                    <td>
-                        <a href="user-update/" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i>	
-                        </a>
-                    </td>
-                    <td>
-                        <form action="">
-                            <button type="button" class="btn btn-warning">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                <tr class="text-center" >
-                    <td>4</td>
-                    <td>03045643</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>APELLIDO DE USUARIO</td>
-                    <td>2345456</td>
-                    <td>NOMBRE DE USUARIO</td>
-                    <td>ADMIN@ADMIN.COM</td>
-                    <td>
-                        <a href="user-update/" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i>	
-                        </a>
-                    </td>
-                    <td>
-                        <form action="">
-                            <button type="button" class="btn btn-warning">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<?php
+    require_once "./Controllers/usuarioController.php";
+
+    $ins_usuario = new usuarioController();
+    //$pagina, $resgistros, $privilegio, $id, $url, $busqueda
+    echo $ins_usuario->paginador_usuario_controlador($pagina[1],15,$_SESSION['privilegio_spm'],$_SESSION['id_spm'],$pagina[0],$_SESSION["busqueda_usuario"]);
+ ?>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item disabled">

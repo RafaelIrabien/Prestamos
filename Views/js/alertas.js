@@ -36,7 +36,7 @@ function enviar_formulario_ajax(e) {
         texto_alerta = "Los datos del sistema serán actualizados";
     
     } else if (tipo==="search") {
-        texto_alerta = "Se eliminará el termino de búsqueda y tendrás que escribir uno nuevo";
+        texto_alerta = "Se eliminará el término de búsqueda y tendrás que escribir uno nuevo";
     
     } else if (tipo==="loans") {
         texto_alerta = "¿Desea remover los datos seleccionados para prestamos o reservaciones?";
