@@ -31,8 +31,11 @@
 </div>
 
 <!-- Content -->
+<?php
+    if(!isset($_SESSION["busqueda_usuario"]) && empty($_SESSION["busqueda_usuario"])) {
+ ?>
 <div class="container-fluid">
-    <form class="form-neon" action="">
+    <form class="form-neon FormularioAjax" action="<?php echo SERVER_URL; ?>ajax/buscadorAjax.php" method="POST" data-form="default" autocomplete="off">
         <!-- Nos permitirá saber desde que formulario se hace la búsqueda.
              Colocamos el mismo valor que lleva el indice del array en buscadorAjax.php -->
         <input type="hidden" name="modulo" value="usuario">
@@ -54,6 +57,9 @@
         </div>
     </form>
 </div>
+<?php
+    } else {
+ ?>
 
 <div class="container-fluid">
     <form action="">
@@ -194,3 +200,6 @@
         </ul>
     </nav>
 </div>
+<?php
+    }
+ ?>

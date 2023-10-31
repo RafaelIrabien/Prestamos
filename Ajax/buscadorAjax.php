@@ -95,6 +95,15 @@
                 unset($_SESSION[$name_var]);
             }
         }
+
+        //Redireccionar
+        $url = $data_url[$modulo];
+
+        $alerta = [
+            "Alerta"=>"redireccionar",
+            "URL"=>SERVER_URL.$url."/"
+        ];
+        echo json_encode($alerta);
         
         
     } else {
