@@ -6,8 +6,10 @@
        || isset($_POST['fecha_inicio']) || isset($_POST['fecha_final'])) {
         //Array de las vistas donde se va a redireccionar
         $data_url = [
-            "usuario"=>"user-search"
-            
+            "usuario"=>"user-search",
+            "cliente"=>"client-search",
+            "item"=>"item-search",
+            "prestamo"=>"reservation-search"
         ];
 
         //Comprobamos que el input "modulo" venga definido
@@ -35,6 +37,42 @@
             echo json_encode($alerta);
             exit();
         }
+
+        if ($modulo=="prestamo") {
+            //Creamos estas variables dinamicamente para definir las variables de sesión
+            $fecha_inicio = "fecha_inicio_".$modulo;
+            $fecha_final = "fecha_final_".$modulo;
+
+            //Iniciar búsqueda
+            if (isset($_POST['fecha_inicio']) || isset($_POST['fecha_final'])) {
+                //Comprobar que vengan definidos los dos valores de las variables
+                if ($_POST['fecha_inicio']=="" || $_POST['fecha_final']=="") {
+                    $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"Por favor introduzca una fecha de inicio y una fecha final",
+                        "Tipo"=>"error"
+                       ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+
+                //Creamos las variables de sesión
+                $_SESSION[$fecha_inicio]=$_POST['fecha_inicio'];
+                $_SESSION[$fecha_final]=$_POST['fecha_final'];
+            }
+
+            //Eliminar la búsqueda
+            if (isset($_POST['eliminar_busqueda'])) {
+                //Eliminamos el valor almacenado
+                unset($_SESSION[$fecha_inicio]);
+                unset($_SESSION[$fecha_final]);
+            }
+
+        } else {
+           
+        }
+        
         
     } else {
         session_unset();
