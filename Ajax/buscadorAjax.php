@@ -86,8 +86,13 @@
                     exit();
                 }
 
-                //creamos la variable de sesión
+                //Creamos la variable de sesión
                 $_SESSION[$name_var]=$_POST['busqueda_inicial'];
+            }
+
+            //Eliminar búsqueda
+            if (isset($_POST['eliminar_busqueda'])) {
+                unset($_SESSION[$name_var]);
             }
         }
         
