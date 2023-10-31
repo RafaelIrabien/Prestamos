@@ -70,7 +70,25 @@
             }
 
         } else {
-           
+            $name_var = "busqueda_".$modulo;
+
+            //Iniciar búsqueda
+            if(isset($_POST['busqueda_inicial'])) {
+                //Comprobar que esta definido el valor enviado desde el formulario
+                if ($_POST['busqueda_inicial']=="") {
+                    $alerta = [
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrió un error inesperado",
+                        "Texto"=>"Por favor introduzca un término de búsqueda para empezar",
+                        "Tipo"=>"error"
+                       ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+
+                //creamos la variable de sesión
+                $_SESSION[$name_var]=$_POST['busqueda_inicial'];
+            }
         }
         
         
