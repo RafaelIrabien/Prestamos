@@ -42,7 +42,7 @@ function enviar_formulario_ajax(e) {
         texto_alerta = "¿Desea remover los datos seleccionados para prestamos o reservaciones?";
     
     } else {
-        texto_alerta = "Quieres realizar la operación solicitada";
+        texto_alerta = "¿Quieres realizar la operación solicitada?";
     }
 
     Swal.fire({
