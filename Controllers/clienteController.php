@@ -30,6 +30,19 @@
                 exit();
             }
 
+            //Verificar integridad de los datos
+            if (mainModel::verificar_datos("[0-9-]{1,27}",$dni)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El DNI no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+           
+                echo json_encode($alerta);
+                exit();
+            }
+
         } //Finaliza agregar_usuario_controlador()
 
     }

@@ -7,6 +7,12 @@
         require_once "../Controllers/clienteController.php";
         $ins_cliente = new clienteController();
 
+        /*-------- Agregar un cliente --------*/
+        if (isset($_POST['cliente_dni_reg']) && isset($_POST['cliente_nombre_reg'])) {
+            //Ejecutamos el controlador
+            echo $ins_cliente->agregar_cliente_controlador();
+        }
+
     } else {
         session_start(['name'=>'SPM']);
         //Vaciamos la sesión
