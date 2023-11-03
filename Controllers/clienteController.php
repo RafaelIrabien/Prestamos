@@ -43,6 +43,55 @@
                 exit();
             }
 
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,40}",$nombre)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El nombre no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+           
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,40}",$apellido)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El apellido no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+           
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[0-9()+]{8,20}",$telefono)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El teléfono no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+           
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,150}",$direccion)) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"La dirección no coincide con el formato solicitado",
+                    "Tipo"=>"error"
+                   ];
+           
+                echo json_encode($alerta);
+                exit();
+            }
+
+
         } //Finaliza agregar_usuario_controlador()
 
     }
