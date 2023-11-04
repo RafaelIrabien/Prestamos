@@ -38,7 +38,6 @@
                     "Texto"=>"El DNI no coincide con el formato solicitado",
                     "Tipo"=>"error"
                    ];
-           
                 echo json_encode($alerta);
                 exit();
             }
@@ -50,7 +49,6 @@
                     "Texto"=>"El nombre no coincide con el formato solicitado",
                     "Tipo"=>"error"
                    ];
-           
                 echo json_encode($alerta);
                 exit();
             }
@@ -62,7 +60,6 @@
                     "Texto"=>"El apellido no coincide con el formato solicitado",
                     "Tipo"=>"error"
                    ];
-           
                 echo json_encode($alerta);
                 exit();
             }
@@ -74,7 +71,6 @@
                     "Texto"=>"El teléfono no coincide con el formato solicitado",
                     "Tipo"=>"error"
                    ];
-           
                 echo json_encode($alerta);
                 exit();
             }
@@ -86,7 +82,20 @@
                     "Texto"=>"La dirección no coincide con el formato solicitado",
                     "Tipo"=>"error"
                    ];
-           
+                echo json_encode($alerta);
+                exit();
+            }
+
+            //Comprobando que el DNI no esté registrado en la BD
+            $consulta = "SELECT cliente_dni FROM cliente WHERE cliente_dni='$dni'";
+            $chek_dni = mainModel::ejecutar_consulta_simple($consulta);
+            if ($chek_dni->rowCount()>0) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El DNI ingresado ya se encuentra registrado en el sistema",
+                    "Tipo"=>"error"
+                   ];
                 echo json_encode($alerta);
                 exit();
             }
