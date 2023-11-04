@@ -100,6 +100,34 @@
                 exit();
             }
 
+            //Colocar los índices del Modelo
+            $datos_cliente_reg = [
+                "DNI"=>$dni,
+                "Nombre"=>$nombre,
+                "Apellido"=>$apellido,
+                "Telefono"=>$telefono,
+                "Direccion"=>$direccion
+            ];
+
+            //Llamar a la función para registrar clientes
+            $agregar_cliente = clienteModel::agregar_cliente_modelo($datos_cliente_reg);
+            //Comprobamos si se ha hecho un registro en la BD
+            if ($agregar_cliente->rowCount()==1) {
+                $alerta = [
+                    "Alerta"=>"limpiar",
+                    "Titulo"=>"Cliente registrado",
+                    "Texto"=>"Los datos del cliente han sido registrados con éxito",
+                    "Tipo"=>"success"
+                   ];
+            } else {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"No se pudo registrar el cliente",
+                    "Tipo"=>"error"
+                    ];
+            }
+            echo json_encode($alerta);
 
         } //Finaliza agregar_usuario_controlador()
 

@@ -234,18 +234,10 @@
             //Llamamos a la función para registrar usuarios
             $agregar_usuario=usuarioModel::agregar_usuario_modelo($datos_usuario_reg);
             //Comprobamos si se ha hecho un registro en la BD
-            if ($agregar_usuario->rowCount()==1) {
-                $alerta=[
-					"Alerta"=>"limpiar",
-					"Titulo"=>"Usuario registrado",
-					"Texto"=>"Los datos del usuario han sido registrados con éxito",
-					"Tipo"=>"success"
-				];
-            } 
-            if($agregar_usuario->rowCount()==1){
+            if ($agregar_usuario->rowCount()==1){
 				$alerta=[
 					"Alerta"=>"limpiar",
-					"Titulo"=>"usuario registrado",
+					"Titulo"=>"Usuario registrado",
 					"Texto"=>"Los datos del usuario han sido registrados con exito",
 					"Tipo"=>"success"
 				];
