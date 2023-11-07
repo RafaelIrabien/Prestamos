@@ -133,7 +133,15 @@
 
 
         /*-------- Controlador paginador de clientes --------*/
-        public function paginador_cliente_controlador($pagina,$registros,$id,$url,$busqueda) {
+        public function paginador_cliente_controlador($pagina,$registros,$privilegio,$url,$busqueda) {
+            //Limpiar las variables
+            $pagina = mainModel::limpiar_cadena($pagina);
+            $registros = mainModel::lipiar_cadena($registros);
+            $privilegio = mainModel::limpiar_cadena($privilegio);
+            $url = mainModel::lipiar_cadena($url);
+            $url = SERVER_URL.$url."/";
+            $busqueda = mainModel::limpiar_cadena($busqueda);
+            $tabla = "";
 
         } //Finaliza paginador_cliente_controlador()
 
