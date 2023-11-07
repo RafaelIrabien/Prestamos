@@ -170,6 +170,17 @@
                              LIMIT $inicio,$registros";
             }
 
+            $conexion = mainModel::conectar();
+            $datos = $conexion->query($consulta);
+            $datos = $datos->fetchAll();
+
+            //Se cuentan los registros que muestra cualquiera de las 2 consultas anteriores
+            $total = $conexion->query("SELECT FOUND_ROWS()");
+            //Convertimos la variable a entero y vamos a saber cuántos registros tiene
+            $total = (int) $total->fetchColumn();
+            //Se redondea el número de páginas en caso de dar un número decimal
+            $N_paginas = ceil($total/$registros);
+
         } //Finaliza paginador_cliente_controlador()
 
     }
