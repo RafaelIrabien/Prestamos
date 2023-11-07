@@ -143,6 +143,33 @@
             $busqueda = mainModel::limpiar_cadena($busqueda);
             $tabla = "";
 
+            //1.- Si la pagina esta definida y es mayor a 0
+            //2.- Convertimos la variable en entero
+            //3.- Si la variable pagina no viene definida o no es un numero
+            //se envia al usuario a la página número 1
+            $pagina = (isset($pagina) && $pagina>0) ? (int) $pagina : 1 ;
+
+            //Saber desde qué registro se empezará a contar
+            $inicio = ($pagina>0) ? (($pagina*$registros)-$registros) : 0 ;
+
+            //Seleccionar los registros
+            if (isset($busqueda) && $busqueda!="") {
+                $consulta = "SELECT SQL_CALC_FOUND_ROWS * 
+                             FROM cliente
+                             WHERE cliente_dni LIKE '%$busqueda%'
+                             OR cliente_nombre LIKE '%$busqueda%'
+                             OR cliente_apellido LIKE '%$busqueda%'
+                             OR cliente_telefono LIKE '%$busqueda%'
+                             OR cliente_direccion LIKE '%$busqueda%'
+                             ORDER BY cliente_nombre ASC
+                             LIMIT $inicio,$registros";
+            } else {
+                $consulta = "SELECT SQL_CALC_FOUND_ROWS *
+                             FROM cliente
+                             ORDER BY cliente_nombre ASC
+                             LIMIT $inicio,$registros";
+            }
+
         } //Finaliza paginador_cliente_controlador()
 
     }
