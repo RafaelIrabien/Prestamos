@@ -131,4 +131,10 @@
 
         } //Finaliza agregar_usuario_controlador()
 
+
+        /*-------- Controlador paginador de clientes --------*/
+        public function paginador_cliente_controlador($pagina,$registros,$id,$url,$busqueda) {
+
+        } //Finaliza paginador_cliente_controlador()
+
     }
