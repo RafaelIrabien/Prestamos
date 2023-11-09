@@ -249,6 +249,16 @@
             }
             $tabla.='</tbody></table></div>';
 
+            //Comprobamos si hay registros y si estamos en una página correcta
+            if ($total>=1 && $pagina<=$N_paginas) {
+                //Mostramos la longitud de usuarios(id-id) por pagina 
+                //y el total de registrados
+                $tabla.='<p class="text-right">Mostrando cliente '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p';
+                $tabla.=mainModel::paginador_tablas($pagina,$N_paginas,$url,7);
+            }
+
+            return $tabla;
+
         } //Finaliza paginador_cliente_controlador()
 
     }
