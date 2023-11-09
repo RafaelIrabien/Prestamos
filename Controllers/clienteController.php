@@ -136,9 +136,9 @@
         public function paginador_cliente_controlador($pagina,$registros,$privilegio,$url,$busqueda) {
             //Limpiar las variables
             $pagina = mainModel::limpiar_cadena($pagina);
-            $registros = mainModel::lipiar_cadena($registros);
+            $registros = mainModel::limpiar_cadena($registros);
             $privilegio = mainModel::limpiar_cadena($privilegio);
-            $url = mainModel::lipiar_cadena($url);
+            $url = mainModel::limpiar_cadena($url);
             $url = SERVER_URL.$url."/";
             $busqueda = mainModel::limpiar_cadena($busqueda);
             $tabla = "";
@@ -181,7 +181,164 @@
             //Se redondea el número de páginas en caso de dar un número decimal
             $N_paginas = ceil($total/$registros);
 
+            //Estructura de la tabla
+            $tabla.='<div class="table-responsive">
+            <table class="table table-dark table-sm">
+                <thead>
+                    <tr class="text-center roboto-medium">
+                        <th>#</th>
+                        <th>DNI</th>
+                        <th>NOMBRE</th>
+                        <th>TELÉFONO</th>
+                        <th>DIRECCIÓN </th>';
+                        if ($privilegio==1 || $privilegio==2) {
+                            $tabla.='<th>ACTUALIZAR</th>';
+                        }
+                        if ($privilegio==1) {
+                            $tabla.='<th>ELIMINAR</th>';
+                        }
+            $tabla.='</tr>
+                </thead>
+                <tbody>';
+
+            if ($total>=1 && $pagina<=$N_paginas) {
+                //Se muestran los registros dentro de la tabla
+                $contador = $inicio+1;
+                //Nos mostrará desde que registro se está mostrando
+                $reg_inicio = $inicio+1;
+                foreach ($datos as $rows) {
+                    $tabla.='<tr class="text-center">
+                    <td>'.$contador.'</td>
+                    <td>'.$rows['cliente_dni'].'</td>
+                    <td>'.$rows['cliente_nombre'].' '.$rows['cliente_apellido'].'</td>
+                    <td>'.$rows['cliente_telefono'].'</td>
+                    <td><button type="button" class="btn btn-info" data-toggle="popover" data-trigger="hover" title="'.$rows['cliente_nombre'].' '.$rows['cliente_apellido'].'" data-content="'.$rows['cliente_direccion'].'">
+                            <i class="fas fa-info-circle"></i>
+                        </button></td>';
+
+                    if ($privilegio==1 || $privilegio==2) {
+                        $tabla.='<td>
+                        <a href="'.SERVER_URL.'client-update/'.mainModel::encryption($rows['cliente_id']).'/" class="btn btn-success">
+                            <i class="fas fa-sync-alt"></i>	
+                        </a>
+                    </td>';
+                    }
+                    if ($privilegio==1) {
+                        $tabla.='<td>
+                        <form class="FormularioAjax" action="'.SERVER_URL.'ajax/clienteAjax.php" method="POST" data-form="delete" autocomplete="off">
+                            <input type="hidden" name="cliente_id_del" value="'.mainModel::encryption($rows['cliente_id']).'">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>';
+                    }
+                    
+                $tabla.='</tr>';
+                $contador++;
+                }
+                $reg_final = $contador-1;
+            } else {
+                //Comprobamos si hay registros
+                if ($total>=1) {
+                    $tabla.='<tr class="text-center" ><td colspan="9">
+                    <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga click aca para recargar el listado</a></td></tr>';
+                } else {
+                    $tabla.='<tr class="text-center" ><td colspan="9">No hay registros en el sistema</td></tr>';
+                }
+            }
+            $tabla.='</tbody></table></div>';
+
+            //Comprobamos si hay registros y si estamos en una página correcta
+            if ($total>=1 && $pagina<=$N_paginas) {
+                //Mostramos la longitud de usuarios(id-id) por pagina 
+                //y el total de registrados
+                $tabla.='<p class="text-right">Mostrando cliente '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p';
+                $tabla.=mainModel::paginador_tablas($pagina,$N_paginas,$url,7);
+            }
+
+            return $tabla;
+
+
             
+
+            //Estructura de la tabla
+            $tabla.='<div class="table-responsive">
+            <table class="table table-dark table-sm">
+                <thead>
+                    <tr class="text-center roboto-medium">
+                        <th>#</th>
+                        <th>DNI</th>
+                        <th>NOMBRE</th>
+                        <th>TELÉFONO</th>
+                        <th>DIRECCIÓN </th>';
+                        if ($privilegio==1 || $privilegio==2) {
+                            $tabla.='<th>ACTUALIZAR</th>';
+                        }
+                        if ($privilegio==1) {
+                            $tabla.='<th>ELIMINAR</th>';
+                        }
+            $tabla.='</tr>
+                </thead>
+                <tbody>';
+
+            if ($total>=1 && $pagina<=$N_paginas) {
+                //Se muestran los registros dentro de la tabla
+                $contador = $inicio+1;
+                //Nos mostrará desde que registro se está mostrando
+                $reg_inicio = $inicio+1;
+                foreach ($datos as $rows) {
+                    $tabla.='<tr class="text-center">
+                    <td>'.$contador.'</td>
+                    <td>'.$rows['cliente_dni'].'</td>
+                    <td>'.$rows['cliente_nombre'].' '.$rows['cliente_apellido'].'</td>
+                    <td>'.$rows['cliente_telefono'].'</td>
+                    <td><button type="button" class="btn btn-info" data-toggle="popover" data-trigger="hover" title="'.$rows['cliente_nombre'].' '.$rows['cliente_apellido'].'" data-content="'.$rows['cliente_direccion'].'">
+                            <i class="fas fa-info-circle"></i>
+                        </button></td>';
+
+                    if ($privilegio==1 || $privilegio==2) {
+                        $tabla.='<td>
+                        <a href="'.SERVER_URL.'client-update/'.mainModel::encryption($rows['cliente_id']).'/" class="btn btn-success">
+                            <i class="fas fa-sync-alt"></i>	
+                        </a>
+                    </td>';
+                    }
+                    if ($privilegio==1) {
+                        $tabla.='<td>
+                        <form class="FormularioAjax" action="'.SERVER_URL.'ajax/clienteAjax.php" method="POST" data-form="delete" autocomplete="off">
+                            <input type="hidden" name="cliente_id_del" value="'.mainModel::encryption($rows['cliente_id']).'">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>';
+                    }
+                    
+                $tabla.='</tr>';
+                $contador++;
+                }
+                $reg_final = $contador-1;
+            } else {
+                //Comprobamos si hay registros
+                if ($total>=1) {
+                    $tabla.='<tr class="text-center" ><td colspan="9">
+                    <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga click aca para recargar el listado</a></td></tr>';
+                } else {
+                    $tabla.='<tr class="text-center" ><td colspan="9">No hay registros en el sistema</td></tr>';
+                }
+            }
+            $tabla.='</tbody></table></div>';
+
+            //Comprobamos si hay registros y si estamos en una página correcta
+            if ($total>=1 && $pagina<=$N_paginas) {
+                //Mostramos la longitud de usuarios(id-id) por pagina 
+                //y el total de registrados
+                $tabla.='<p class="text-right">Mostrando cliente '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p';
+                $tabla.=mainModel::paginador_tablas($pagina,$N_paginas,$url,7);
+            }
+
+            return $tabla;
 
         } //Finaliza paginador_cliente_controlador()
 
