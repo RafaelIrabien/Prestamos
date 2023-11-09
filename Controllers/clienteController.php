@@ -181,6 +181,8 @@
             //Se redondea el número de páginas en caso de dar un número decimal
             $N_paginas = ceil($total/$registros);
 
+            
+
         } //Finaliza paginador_cliente_controlador()
 
     }
