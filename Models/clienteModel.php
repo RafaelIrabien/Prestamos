@@ -34,6 +34,7 @@
             $conexion = mainModel::conectar();
             //Contamos los clientes registrados
             $sql = "SELECT cliente_id FROM cliente";
+            $query = $conexion->prepare($sql);
         }
         $query->execute();
         return $query;
