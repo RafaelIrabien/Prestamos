@@ -342,4 +342,18 @@
 
         } //Finaliza paginador_cliente_controlador()
 
+
+        /*-------- Controlador datos cliente --------*/
+        public function datos_cliente_controlador($tipo,$id) {
+            $tipo = mainModel::limpiar_cadena($tipo);
+
+            //Desencriptamos y limpiamos la id de usuario
+            $id = mainModel::decryption($id);
+            $id = mainModel::limpiar_cadena($id);
+
+            //Lo enviamos al modelo y retornamos el valor
+            return clienteModel::datos_cliente_modelo($tipo,$id);
+            
+        } //Finaliza datos_cliente_controlador()
+
     }
