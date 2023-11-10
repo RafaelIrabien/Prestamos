@@ -21,4 +21,22 @@
         return $query;
     }
 
+    /*-------- Modelo datos cliente --------*/
+    protected static function datos_cliente_modelo($tipo,$id) {
+        if ($tipo=="Unico") {
+            $conexion = mainModel::conectar();
+            $sql = "SELECT * FROM cliente WHERE cliente_id=:ID";
+            $query = $conexion->prepare($sql);
+
+            $query->bindParam(":ID",$id);
+        } 
+        elseif ($tipo=="Conteo") {
+            $conexion = mainModel::conectar();
+            //Contamos los clientes registrados
+            $sql = "SELECT cliente_id FROM cliente";
+        }
+        $query->execute();
+        return $query;
+    }
+
  }
