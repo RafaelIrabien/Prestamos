@@ -343,6 +343,14 @@
         } //Finaliza paginador_cliente_controlador()
 
 
+        /*-------- Controlador eliminar cliente --------*/
+        public function eliminar_cliente_controlador() {
+            
+        }
+        
+
+
+
         /*-------- Controlador datos cliente --------*/
         public function datos_cliente_controlador($tipo,$id) {
             $tipo = mainModel::limpiar_cadena($tipo);
