@@ -363,7 +363,23 @@
                 echo json_encode($alerta);
                 exit();
             }
-        }
+
+            //Comprobamos los prestamos
+            $consulta = "SELECT cliente_id FROM prestamo WHERE cliente_id='$id' LIMIT 1";
+            $check_prestamos = mainModel::ejecutar_consulta_simple($consulta);
+
+            if ($check_prestamos->rowCount()>0) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"No podemos eliminar este cliente debido a que tiene préstamos asociados, recomendamos deshabilitar el usuario si ya no será utilizado",
+                    "Tipo"=>"error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+        } //Finaliza eliminar_cliente_controlador()
         
 
 
