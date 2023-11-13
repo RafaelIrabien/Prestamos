@@ -345,7 +345,24 @@
 
         /*-------- Controlador eliminar cliente --------*/
         public function eliminar_cliente_controlador() {
-            
+            //Recibir el id del cliente
+            $id = mainModel::decryption($_POST['cliente_id_del']);
+            $id = mainModel::limpiar_cadena($id);
+
+            //Comprobamos el cliente en la BD
+            $consulta = "SELECT cliente_id FROM cliente WHERE cliente_id='$id'";
+            $check_cliente = mainModel::ejecutar_consulta_simple($consulta);
+
+            if ($check_cliente->rowCount()<=0) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"El cliente que intenta eliminar no existe en el sistema",
+                    "Tipo"=>"error"
+                   ];
+                echo json_encode($alerta);
+                exit();
+            }
         }
         
 
