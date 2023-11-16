@@ -392,6 +392,27 @@
                 exit();
             }
 
+             //Llamamos al modelo para eliminar el cliente
+             $eliminar_cliente = clienteModel::eliminar_cliente_modelo($id);
+
+             if ($eliminar_cliente->rowCount()==1) {
+                $alerta = [
+                    "Alerta"=>"recargar",
+                    "Titulo"=>"Cliente eliminado",
+                    "Texto"=>"El cliente ha sido eliminado del sistema exitosamente",
+                    "Tipo"=>"success"
+                ];   
+             } else {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"No hemos podido eliminar el cliente, por favor intente nuevamente",
+                    "Tipo"=>"error"
+                ];
+             }
+             echo json_encode($alerta);
+             
+
         } //Finaliza eliminar_cliente_controlador()
         
 
