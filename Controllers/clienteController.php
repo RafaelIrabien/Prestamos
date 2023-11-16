@@ -372,7 +372,20 @@
                 $alerta = [
                     "Alerta"=>"simple",
                     "Titulo"=>"Ocurrió un error inesperado",
-                    "Texto"=>"No podemos eliminar este cliente debido a que tiene préstamos asociados, recomendamos deshabilitar el usuario si ya no será utilizado",
+                    "Texto"=>"No podemos eliminar este cliente debido a que tiene préstamos asociados",
+                    "Tipo"=>"error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            //Comprobamos el privilegio
+            session_start(['name'=>'SPM']);
+            if ($_SESSION['privilegio_spm']!=1) {
+                $alerta = [
+                    "Alerta"=>"simple",
+                    "Titulo"=>"Ocurrió un error inesperado",
+                    "Texto"=>"No tienes los permisos necesarios para realizar esta operación",
                     "Tipo"=>"error"
                 ];
                 echo json_encode($alerta);
