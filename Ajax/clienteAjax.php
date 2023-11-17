@@ -13,6 +13,12 @@
             echo $ins_cliente->agregar_cliente_controlador();
         }
 
+        /*-------- Eliminar un cliente --------*/
+        if (isset($_POST['cliente_id_del'])) {
+            //Ejecutamos el controlador
+            echo $ins_cliente->eliminar_cliente_controlador();
+        }
+
     } else {
         session_start(['name'=>'SPM']);
         //Vaciamos la sesión
