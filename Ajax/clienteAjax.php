@@ -2,7 +2,7 @@
     $peticionAjax = true;
     require_once "../Config/APP.php";
 
-    if (isset($_POST['cliente_dni_reg'])) {
+    if (isset($_POST['cliente_dni_reg']) || isset($_POST['cliente_id_del'])) {
         /*-------- Instancia al controlador --------*/
         require_once "../Controllers/clienteController.php";
         $ins_cliente = new clienteController();
