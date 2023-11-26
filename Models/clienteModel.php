@@ -51,4 +51,28 @@
         return $query;
     }
 
+    /*-------- Modelo actualizar cliente --------*/
+    protected function actualizar_cliente_modelo($datos) {
+        $conexion = mainModel::conectar();
+        $sql = "UPDATE cliente SET
+                cliente_dni=:DNI,
+                cliente_nombre=:Nombre,
+                cliente_apellido=:Apellido,
+                cliente_telefono=:Telefono,
+                cliente_direccion=:Direccion
+                WHERE cliente_id=:ID";
+        
+        $query = $conexion->prepare($sql);
+
+        $query->bindParam(":DNI",$datos['DNI']);
+        $query->bindParam(":Nombre",$datos['Nombre']);
+        $query->bindParam(":Apellido",$datos['Apellido']);
+        $query->bindParam(":Telefono",$datos['Telefono']);
+        $query->bindParam(":Direccion",$datos['Direccion']);
+        $query->bindParam(":ID",$datos['ID']);
+
+        $query->execute();
+        return $query;
+    }
+
  }
